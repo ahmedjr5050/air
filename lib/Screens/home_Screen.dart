@@ -1,10 +1,14 @@
+import 'package:air/Screens/hotel_screen.dart';
 import 'package:air/Screens/tiket_view.dart';
 import 'package:air/utils/Styles.dart';
+import 'package:air/utils/app_info_list.dart';
 import 'package:air/widgets/thick_container.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
+import '../widgets/double_text_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -65,20 +69,9 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Gap(40),
+                const Gap(15),
                 //this View all and text Upcoming
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:  [
-                    Text("Upcoming Flights",style: Styles.headLineStyle2,),
-                    InkWell(
-                      onTap: (){
-                        print("You are Tapped");
-                      },
-                      child: Text("View all",style: Styles.textStyle.copyWith(color:Styles.primaryColor)),
-                    )
-                  ],
-                )
+                AppDoubleTextWidget(bigText: "Upcoming Flights", smallText: "View all"),
 
               ],
             ),
@@ -88,30 +81,24 @@ class HomeScreen extends StatelessWidget {
             padding:const EdgeInsets.only(left: 20),
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: [
-               TicketView(),
-                TicketView(),
-                TicketView(),
-                TicketView(),
-              ],
+              children:
+             ticketList.map((singleTicket) => TicketView(ticket: singleTicket)).toList(),
             ),
           ),
-          const Gap(15),
+          const Gap(10),
           Container(
             padding:const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Hotels",style: Styles.headLineStyle2,),
-                InkWell(
-                  onTap: (){
-                    print("You are Tapped 2");
-                },
-                  child: Text("View all",style: Styles.textStyle.copyWith(color: Styles.primaryColor),),
-                )
-              ],
-            ),
-          )
+            child: const AppDoubleTextWidget(bigText: "Hotels", smallText: "View all"),
+          ),
+          const Gap(15),
+         SingleChildScrollView(
+             padding:const EdgeInsets.only(left: 20),
+             scrollDirection: Axis.horizontal,
+             child: Row(
+               children:
+                hotelList.map((singleHotel) => HotelScreen(hotel: singleHotel)).toList(),
+             )
+         ),
         ],
       ) ,
 
